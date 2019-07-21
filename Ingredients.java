@@ -3,6 +3,12 @@ import java.util.HashMap;
 	import java.io.FileNotFoundException;
 	import java.util.Scanner;
 	import java.util.ArrayList;
+/**
+ * This class extracts the  ingredients and sub ingredients including
+ *  allergy information from the .csv file for food composition data from the usda.gov 
+ * @author rachelsickle
+ *
+ */
 public class Ingredients {
 	static String ingredientsFilename="Products.csv";
 			static String NDB_Number_0;
@@ -25,6 +31,10 @@ public class Ingredients {
 		
 
 
+/**This method  parses the  ingredients and sub ingredients including
+ *  allergy information from the .csv file for food composition data from the usda.gov 
+ * @throws FileNotFoundException
+ */
 public static void uploadIngredientInformation() throws FileNotFoundException{	
 	int n=0;
 	File IngredientFile =new File(ingredientsFilename);
@@ -42,7 +52,7 @@ public static void uploadIngredientInformation() throws FileNotFoundException{
 			allergyList.clear();
 			for(int x=0; x< ingredientData.length; x++) {
 				allergyList.add(ingredientData[x]);
-				//System.out.println(allergyList);
+				System.out.println(allergyList);
 				}
 			
 		

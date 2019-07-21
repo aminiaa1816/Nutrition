@@ -1,0 +1,38 @@
+new recipe start
+Panko Pesto Chicken
+Yukon Gold Potatoes
+12 ounce
+Panko Breadcrumbs
+½ cup
+Mozzarella Cheese
+½ cup
+Chicken Breasts
+12 ounce
+Pesto
+2 tablespoon
+Lemon
+1 unit
+Mixed Greens
+2 ounce
+Olive Oil
+5 teaspoon
+end recipe
+new recipe start
+Chicken Sausage-Stuffed Zucchini Boats
+Zucchini
+2 unit
+Italian Chicken Sausage
+18 ounce
+Tuscan Heat Spice
+1 tablespoon
+Israeli Couscous
+1.5 cup
+Tomato Paste
+3 ounce
+Roma Tomato
+1 unit
+Basil
+1 ounce
+Monterey Jack Cheese
+½ cup
+end recipe
