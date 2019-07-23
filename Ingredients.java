@@ -33,9 +33,9 @@ public class Ingredients {
 
 /**This method  parses the  ingredients and sub ingredients including
  *  allergy information from the .csv file for food composition data from the usda.gov 
- * @throws FileNotFoundException
+ * @throws FileNotFoundException-Exception if file not found
  */
-public static void uploadIngredientInformation() throws FileNotFoundException{	
+public static HashMap<String,Ingredients>  uploadIngredientInformation() throws FileNotFoundException{	
 	int n=0;
 	File IngredientFile =new File(ingredientsFilename);
 	Scanner scanner = new Scanner(IngredientFile);
@@ -52,7 +52,7 @@ public static void uploadIngredientInformation() throws FileNotFoundException{
 			allergyList.clear();
 			for(int x=0; x< ingredientData.length; x++) {
 				allergyList.add(ingredientData[x]);
-				System.out.println(allergyList);
+				//System.out.println(allergyList);
 				}
 			
 		
@@ -68,6 +68,7 @@ public static void uploadIngredientInformation() throws FileNotFoundException{
 					 
 			}
 	}
+	return ingredientDict;
 }
 	
 public static void main(String[] args) {
