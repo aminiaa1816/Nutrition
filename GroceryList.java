@@ -1,3 +1,7 @@
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Scanner;
 
 /**This class creates a grocery list compiled of ingredients, their quantities, and 
  * lists restricted food allergies.
@@ -5,15 +9,16 @@
  *
  */
 public class GroceryList {
+	static HashMap<String,String> availableRecipes= new HashMap<String,String> ();
+	 Integer key ;
 	
 	
-	
+
 	/**This method takes a recipe and compares the ingredients in the recipe to 
 	 * sub-ingredients checking for the the selected allergy.  If an allergy exists
 	 * the recipe object is set to 1 excluding it from selection.
-	 * @param allergyIngredient
+	 * @param allergyIngredient- user selected restricted ingredient
 	 */
-	
 	public void getfoodAllergies(String allergyIngredient ) {}
 	
 	
@@ -27,9 +32,13 @@ public class GroceryList {
 	
 	/**This method displays the recipes without allergyRestriction.  User selects
 	 * recipes from the list.
-	 * 
+	 * @param cookBook - An Array List of all Recipe objects
+	 * return selected Recipes objects in an ArrayList
 	 */
-	public void SelectRecipes() {}
+	public static ArrayList<Recipe> selectRecipes (ArrayList<Recipe>cookBook) {
+		return null;}
+	
+	
 	
 	
 	
@@ -37,12 +46,9 @@ public class GroceryList {
 	 * It takes the quality of similar ingredients and displays a list of 
 	 * quantities for each ingredient;
 	 */
-	public void combineListOfIngredients() {}
+	public void combineListOfIngredients(ArrayList<Recipe> selectedRecipes) {}
 	
 	
-
-	
-	
-
-
+public static void main(String[] args) throws FileNotFoundException {
+}
 }
