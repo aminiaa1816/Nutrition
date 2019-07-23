@@ -21,9 +21,8 @@ public class Ingredients {
 			String Ingredients_english_7;
 			static ArrayList<String> allergyList= new ArrayList<String>();
 			static HashMap<String,Ingredients> ingredientDict=new HashMap< >();;
-			public Ingredients( ) {
-
-			}
+	
+	
 	private Ingredients(String IngredientNumber, String long_name, ArrayList<String> Allergy ) {
 		NDB_Number_0=IngredientNumber;
 		long_name_1=long_name;
@@ -65,12 +64,10 @@ public static HashMap<String,Ingredients>  uploadIngredientInformation() throws 
 				{
 					String longname= ingredientDict.get(key).long_name_1;
 					
-					//System.out.println(longname);
+					System.out.println(longname);
 					 
 			}
 	}
-	System.out.println("Done");
-
 	return ingredientDict;
 }
 	
