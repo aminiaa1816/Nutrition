@@ -58,7 +58,7 @@ public class UserInterface extends JFrame implements ActionListener {
 	// Panel 1 components
 	static JButton button2 = new JButton("Load New Recipe");
 	static JButton button3 = new JButton("Confirm Recipe");
-	static JButton button4 = new JButton("Update On Hand List");
+	static JButton button4 = new JButton("Add Recipe URL");
 	static JButton button5 = new JButton("Get Recipe List");
 	static JButton button7 = new JButton("Extra");
 	static JTextField allergyTextArea = new JTextField("Allergen Input");
@@ -87,6 +87,7 @@ public class UserInterface extends JFrame implements ActionListener {
 
 	// Panel 6 Components
 	static JTextArea gTextArea = new JTextArea("");
+	static JTextField urlTextArea = new JTextField("Enter Recipe URL Here");
 
 	// count for method display compiling recipe file.
 	static int y = 1;
@@ -129,6 +130,7 @@ public class UserInterface extends JFrame implements ActionListener {
 		button4.addActionListener(new MyOKListener());
 		button5.addActionListener(new MyOKListener());
 		allergyTextArea.addActionListener(new MyOKListener());
+		
 
 		// Display for p2
 		p2.setLayout(new GridLayout(10, 3, 33, 7));
@@ -180,9 +182,10 @@ public class UserInterface extends JFrame implements ActionListener {
 		buttonR10.setActionCommand("R10");
 
 		// Panel 3 settings
-		BufferedImage image = ImageIO.read(new File("pictures/hash2.jpg"));
-		JLabel picLabel = new JLabel(new ImageIcon(image));
-		p3.add(picLabel, BorderLayout.CENTER);
+		//BufferedImage image = ImageIO.read(new File("pictures/hash2.jpg"));
+		//JLabel picLabel = new JLabel(new ImageIcon(image));
+		//p3.add(picLabel, BorderLayout.CENTER);
+		
 
 		// Panel 4 settings
 		p4.setLayout(new BorderLayout());
@@ -192,16 +195,19 @@ public class UserInterface extends JFrame implements ActionListener {
 		p5.setLayout(new BorderLayout());
 
 		p5.add(buttonGetList, BorderLayout.SOUTH);
-
-		p5.add(labArea, BorderLayout.CENTER);
-
-		// Panel 6 settings
 		buttonGetList.addActionListener(new MyOKListener());
+		labArea.setLineWrap(true);
+		p5.add(labArea, BorderLayout.CENTER);
+		p5.add(urlTextArea,BorderLayout.NORTH);
+		// Panel 6 settings
+		urlTextArea.addActionListener(new MyOKListener());
+		
 		button6.addActionListener(new MyOKListener());
 		button6.setBounds(75, 200, 120, 50);
 		p6.setLayout(new BorderLayout());
 		p6.add(gTextArea, BorderLayout.CENTER);
 		p6.add(button6, BorderLayout.NORTH);
+		gTextArea.setLineWrap(true);
 		button6.setVisible(false);
 
 		container.add(p1);
@@ -222,10 +228,10 @@ public class UserInterface extends JFrame implements ActionListener {
 
 		for (int n = 0; n < condensedList.size() && n < 10; n++) {
 			rlist.get(n).setText(condensedList.get(n).recipeName);
-			System.out.println(condensedList.get(n).recipeName);
+			//System.out.println(condensedList.get(n).recipeName);
 			rlist.get(n).setEnabled(true);
-			p2.revalidate();
-			p2.repaint();
+			//p2.revalidate();
+			//p2.repaint();
 		}
 	}
 
@@ -239,8 +245,8 @@ public class UserInterface extends JFrame implements ActionListener {
 			rlist.get(n).setText(numberAsString);
 			rlist.get(n).setEnabled(false);
 			rlist.get(n).setForeground(Color.BLACK);
-			p2.revalidate();
-			p2.repaint();
+			//p2.revalidate();
+			//p2.repaint();
 		}
 	}
 
@@ -265,7 +271,8 @@ public class UserInterface extends JFrame implements ActionListener {
 
 				// Listens for the allergen input from the user and updates the variable
 				GroceryList.allergen = allergyTextArea.getText();
-
+				WebRecipe.uRL=urlTextArea.getText();
+				
 				if (com.equals("Load New Recipe")) {
 					// clear table
 					JTable table = new JTable(2, 2);
@@ -321,32 +328,36 @@ public class UserInterface extends JFrame implements ActionListener {
 
 				if (com.equals("Get Recipe List")) {
 
-					try {
-						if (y == 1) {
+					//try {
+						//if (Recipe.counter==0) {Recipe.CookBookInformationReader();
+						
 							//Loads new recipes for display
-							Recipe.CookBookInformationReader();
-							y++;
-						}
+							
+						//Recipe.counter++;
+						//}
 
-					} catch (FileNotFoundException e) {
-						labArea.setText("cookBook Not Found");
-						e.printStackTrace();
-					}
+					//} catch (FileNotFoundException e) {
+						//labArea.setText("cookBook Not Found");
+						//e.printStackTrace();
+					//}
 					try {
 						// Runs the method that returns the nonAllergenRecipes.
 						//!!!!!!Add the following line when method the getfoodAllergies is working!!!
-						// GroceryList.getfoodAllergies(GroceryList.allergen);
+						GroceryList.getAllergnRecipes(); 
+						GroceryList.getfoodAllergies();
 					} catch (Exception e) {
 						// labArea.setText("GroceryList Not Found");
 						e.printStackTrace();
 					}
 					labArea.setText("Select Ingredients to" + "\n" + "add to grocery list");
 					//!!!!!!Remove when getfoodAllergies is working
-					addButtons(Recipe.cookBook);
+					addButtons(GroceryList.nonAllergenRecipes);
 					//!!!!!!Add the following line when method getfoodAllergies is working!!!
 					//addButtons(GroceryList.nonAllergenRecipes);
 					button5.setEnabled(false);
 					button6.setVisible(true);
+					button2.setEnabled(false);
+					button4.setEnabled(false);
 					button2.setEnabled(false);
 					
 				}
@@ -355,13 +366,40 @@ public class UserInterface extends JFrame implements ActionListener {
 					JTable table = new JTable(2, 2);
 					p4.add(table);
 					//!!!!!!Enable next line when resets are defined in groceryList
-					// GroceryList.resetAllergy();
+					GroceryList.resetAllergy();
 					button5.setEnabled(true);
 					button2.setEnabled(true);
+					button4.setEnabled(true);
 					button6.setVisible(false);
 					allergyTextArea.setText("Allergen Input");
 					labArea.setText("Input Allergy Ingredient" + "\n" + "then click Get Recipe List");
 
+				}
+				if (com.equals("Add Recipe URL")) {
+					try {
+						WebRecipe.getWebRecipe(WebRecipe.uRL);
+						urlTextArea.setText(WebRecipe.recipeTitle);
+						labArea.setText(WebRecipe.recipeInfo);
+						gTextArea.setText(WebRecipe.recipeAllergies);
+						JTable table = new JTable(WebRecipe.recipeIngredients.size(), 2);
+						int row = 0;
+
+						for (Entry<String, String> entry :WebRecipe.recipeIngredients.entrySet()) {
+							table.setValueAt(entry.getKey(), row, 0);
+							table.setValueAt(entry.getValue(), row, 1);
+							row++;
+							//Recipe.CookBookInformationReader();
+						}
+						p4.add(table);
+						
+						
+						
+						
+						
+					} catch (IOException e) {
+						labArea.setText("Invalid URL");
+						e.printStackTrace();
+					}
 				}
 				if (com.contentEquals("Get Grocery List")) {
 					//!!!!!!Will not work until combineListOfIngredients is working
@@ -385,7 +423,7 @@ public class UserInterface extends JFrame implements ActionListener {
 				/// Selected recipes need to be added where noted
 
 				if (com.equals("R1")) 
-				{
+				{	p4.remove(table);
 					buttonR1.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(0).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(0).recipeName + " Added");
@@ -403,7 +441,7 @@ public class UserInterface extends JFrame implements ActionListener {
 				}
 				
 				if (com.equals("R2")) 
-				{
+				{	p4.remove(table);
 					buttonR2.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(1).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(1).recipeName + " Added");
@@ -420,7 +458,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R3")) 
-				{
+				{	p4.remove(table);
 					buttonR3.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(2).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(2).recipeName + " Added");
@@ -437,7 +475,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R4")) 
-				{
+				{	p4.remove(table);
 					buttonR4.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(3).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(3).recipeName + " Added");
@@ -454,7 +492,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R5")) 
-				{
+				{	p4.remove(table);
 					buttonR5.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(4).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(4).recipeName + " Added");
@@ -471,7 +509,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R6")) 
-				{
+				{	p4.remove(table);
 					buttonR6.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(5).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(5).recipeName + " Added");
@@ -488,7 +526,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R7")) 
-				{
+				{	p4.remove(table);
 					buttonR7.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(6).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(6).recipeName + " Added");
@@ -505,7 +543,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R8")) 
-				{
+				{	p4.remove(table);
 					buttonR8.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(7).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(7).recipeName + " Added");
@@ -522,7 +560,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R9")) 
-				{
+				{	p4.remove(table);
 					buttonR9.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(8).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(8).recipeName + " Added");
@@ -539,7 +577,7 @@ public class UserInterface extends JFrame implements ActionListener {
 					p4.add(table);
 				}
 				if (com.equals("R10")) 
-				{
+				{	p4.remove(table);
 					buttonR10.setForeground(Color.BLUE);
 					labArea.setText(Recipe.cookBook.get(9).recipeName + " Added");
 					//labArea.setText(GroceryList.nonAllergenRecipes.get(9).recipeName + " Added");

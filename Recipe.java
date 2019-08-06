@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
+
+import org.json.JSONException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.io.File;
@@ -22,7 +25,15 @@ import javax.swing.filechooser.FileSystemView;
  *
  */
 public class Recipe {
-	 public String  recipeName;
+	 public void setAllergyRestriction(int allergyRestriction) {
+		this.allergyRestriction = allergyRestriction;
+	}
+
+	public int getAllergyRestriction() {
+		return allergyRestriction;
+	}
+
+	public String  recipeName;
 	 int allergyRestriction;
 	 int recipeSelected;
 	 static File selectedFile;
@@ -37,6 +48,7 @@ public class Recipe {
 	 static String recipeNamed;
 	 static File recipeFile;
 	 static int x=1;
+	 static int counter=0;
 	 static ArrayList<Recipe> cookBook= new ArrayList<Recipe>();
 	 static String recipeNameScanned;
 	 int selected;
@@ -157,7 +169,7 @@ public class Recipe {
 			HashMap<String, String> new_hash_map = new HashMap<String, String>();
 			new_hash_map.putAll(ingredients);
 			Recipe.cookBook.add(new Recipe((recipeList.get(recipeList.size() - 1)), new_hash_map, 0, 0));
-
+			System.out.println(Recipe.cookBook.size());
 			scanner.close();
 		}
 
@@ -167,6 +179,13 @@ public class Recipe {
 		}
 		
 
+	}
+	
+	
+	public static void main(String[] args) throws IOException, JSONException {
+		
+		
+		
 	}
 
 }
